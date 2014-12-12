@@ -40,7 +40,7 @@ foreach ($environments as $env => $name) {
 }
 
 unset($environments, $hostname);
-Dotenv::load(GWP_ROOT, 'env.' . WP_ENV);
+Dotenv::load(GWP_ROOT, '.env.' . WP_ENV);
 Dotenv::required(array(
     'DB_NAME'
     , 'DB_USER'
