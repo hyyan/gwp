@@ -10,3 +10,6 @@
 
 define('WP_DEBUG_DISPLAY', false);
 define('SCRIPT_DEBUG', false);
+
+/* should we show the current environment name */
+define('SHOW_ENV_NAME',false);
