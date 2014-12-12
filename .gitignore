@@ -11,6 +11,8 @@ web/app/uploads/*
 !web/app/uploads/.gitkeep
 web/app/upgrade
 
+!web/app/mu-plugins/disallow-indexing.php
+
 # Composer
 vendor/*
 !vendor/.gitkeep
