@@ -36,7 +36,7 @@ class Create
             $generate_salts = $composer->getConfig()->get('generate-salts');
         } else {
             $generate_salts = $io->askConfirmation(
-                    '<info>Do you want to generat fresh salt keys ? (Note that this actiion will override your shared.php config file inside the config dir)'
+                    '<info>Do you want to generat fresh salt keys ? (Note that this action will override your shared.php config file inside the config dir)'
                     . '</info> [<comment>Y,n</comment>]? '
                     , true
             );
