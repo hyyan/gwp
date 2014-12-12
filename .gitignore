@@ -21,3 +21,4 @@ vendor/*
 !vendor/.htaccess
 
 /nbproject/private/
+/.htaccess
