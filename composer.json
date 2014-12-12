@@ -1,0 +1,61 @@
+{
+    "name": "hyyan/gwp",
+    "type": "project",
+    "license": "MIT",
+    "description": "A modern WordPress stack",
+    "authors": [
+        {
+            "name": "Hyyan Abo Fakher",
+            "email": "tiribthe4hyyan@gmail.com",
+            "homepage": "https://github.com/hyyan"
+        }
+    ],
+    "keywords": [
+        "wordpress", "stack", "phing", "composer", "wp"
+    ],
+    "support": {
+        "issues": "https://github.com/hyyan/gwp/issues"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://wpackagist.org"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "wordpress/wordpress",
+                "version": "4.0.1",
+                "type": "webroot",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://wordpress.org/wordpress-4.0.1.zip"
+                },
+                "require": {
+                    "fancyguy/webroot-installer": "1.1.0"
+                }
+            }
+        }
+    ],
+    "config": {
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": ">=5.3.2",
+        "wordpress/wordpress": "4.0.1",
+        "fancyguy/webroot-installer": "1.1.0",
+        "composer/installers": "v1.0.12",
+        "vlucas/phpdotenv": "~1.0.6"
+    },
+    "require-dev": {
+    },
+    "extra": {
+        "installer-paths": {
+            "web/app/mu-plugins/gwp-{$name}/": ["type:wordpress-muplugin"],
+            "web/app/plugins/gwp-{$name}/": ["type:wordpress-plugin"],
+            "web/app/themes/gwp-{$name}/": ["type:wordpress-theme"]
+        },
+        "webroot-dir": "web/cms",
+        "webroot-package": "wordpress/wordpress"
+    }
+}
