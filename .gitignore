@@ -20,5 +20,10 @@ vendor/*
 !vendor/.gitkeep
 !vendor/.htaccess
 
+# Root
 /nbproject/private/
+/bin
+/.dist
+/.env.*
+!/.env.local
 /.htaccess
