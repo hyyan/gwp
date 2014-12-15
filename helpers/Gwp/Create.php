@@ -13,7 +13,7 @@ namespace Gwp;
 use Composer\Script\Event;
 
 /**
- * Create Porject Script
+ * Create Project Script
  *
  * @author Hyyan 
  */
@@ -36,7 +36,7 @@ class Create
             $generate_salts = $composer->getConfig()->get('generate-salts');
         } else {
             $generate_salts = $io->askConfirmation(
-                    '<info>Do you want to generat fresh salt keys ? (Note that this action will override your shared.php config file inside the config dir)'
+                    '<info>Do you want to generate fresh salt keys ? (Note that this action will override your shared.php config file inside the config dir)'
                     . '</info> [<comment>Y,n</comment>]? '
                     , true
             );
@@ -50,9 +50,9 @@ class Create
         $salts = @file_get_contents($service);
         if (!$salts) {
             $io->write("<error>"
-                    . "An error occured while trying to generate the salts keys,"
+                    . "An error occurred while trying to generate the salts keys,"
                     . "Please try to generate the salt keys manually from the following url : \"" . $service
-                    . "\" Then copy and paste the resault to your shared.php config file inside the config dir."
+                    . "\" Then copy and paste the result to your shared.php config file inside the config dir."
                     . "</error>");
             return 1;
         }
@@ -61,7 +61,7 @@ class Create
         ));
         if (!@file_put_contents($root . '/config/shared.php', $content)) {
             $io->write("<error>"
-                    . "An error occured while trying to write the salts keys,"
+                    . "An error occurred while trying to write the salts keys,"
                     . "copy and paste the following line to your shared.php config file inside the config dir."
                     . "\n\n"
                     . "</error>"
