@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model 
+    xlink:href="/usr/share/php5/PEAR/data/phing/etc/phing-grammar.rng"
+    type="application/xml"
+    schematypens="http://relaxng.org/ns/structure/1.0" ?>
+
+<!-- 
+ This file is part of the hyyan/gwp package.
+ (c) Hyyan Abo Fakher <tiribthea4hyyan@gmail.com>
+ 
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+-->
+
+<project name="Gwp Project" 
+         basedir="." 
+         default="help" 
+         phingVersion = "2.9.1">
+ 
+    <!-- Import the Gwp workflow file -->
+    <import file="${phing.dir}/build/workflow.xml"/>
+    
+    <!-- help -->
+    <target name="help" description="Display help message about available targets">
+        <exec executable="phing" dir="${phing.dir}/bin" outputProperty="targets">
+            <arg value="-f" />
+            <arg path="${phing.file}" />
+            <arg value="-l" />
+        </exec>
+        <echo>${targets}</echo>
+    </target>
+        
+</project>

@@ -18,6 +18,10 @@
     },
     "repositories": [
         {
+            "type": "pear",
+            "url": "http://pear.php.net"
+        },
+        {
             "type": "composer",
             "url": "http://wpackagist.org"
         },
@@ -57,6 +61,9 @@
         "vlucas/phpdotenv": "~1.0.6"
     },
     "require-dev": {
+        "phing/phing": "2.9.*",
+        "pear-pear.php.net/pear": "1.9.*",
+        "pear-pear.php.net/VersionControl_Git": "0.4.*"
     },
     "extra": {
         "installer-paths": {

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model 
+    xlink:href="/usr/share/php5/PEAR/data/phing/etc/phing-grammar.rng"
+    type="application/xml"
+    schematypens="http://relaxng.org/ns/structure/1.0" ?>
+
+<!-- 
+ This file is part of the hyyan/gwp package.
+ (c) Hyyan Abo Fakher <tiribthea4hyyan@gmail.com>
+ 
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+-->
+
+<project name="workflow" 
+         basedir="." 
+         description="Gwp Build Tool"
+         phingVersion = "2.9.1">    
+   
+    <tstamp>
+        <!-- Format is, e.g. Sat, 03 Oct 2009, 16:31 -->
+        <format property = "buildtime" pattern = "%a, %d %b %Y, %H:%M"/>
+    </tstamp>
+        
+    <!-- 
+        Setup :
+        =========
+        
+        Setup workflow configuration. 
+        
+        The build file will try to detect the current environment .env file 
+        where the default environment is "local" and the file must be found in 
+        the project root . for example: ".env.local" 
+        
+        Then it comes the loading of the "build.properties" which must contains
+        the requires options to make this build pass.
+        
+        Every environment can create additional properties file inside the 
+        environments folder in the build dir to extend the project properties . 
+    -->
+    <target name="-gwp:setup" hidden="true" description="Setup workflow">
+        <property name="root" value="${phing.dir}" override="true"/>
+        <property name="env" value="local" override="true" />
+
+        <!-- try to detect the .env.x file for the current environment -->
+        <condition property="isEnvFileExist">
+            <and>
+                <isset property="env" />
+                <available file="${root}/.env.${env}" type="file" />
+            </and>
+        </condition>
+        <if>
+            <equals arg1="${isEnvFileExist}" arg2="true" />
+            <then>
+                <property name="env.file" value=".env.${env}" override="true" />
+            </then>
+        </if>
+        <fail unless="env.file" message="Unable to locate : .env.${env}" />
+        <property name="env.path" value="${root}/${env.file}" override="true"/>
+
+         <!-- 
+            load the build property files 
+
+            These files must contains all possible options to make this 
+            build pass.
+            new enviroments can overide those loaded properites to configure 
+            the build process.
+        -->
+        <property file="${env.path}" override="true"/>
+        <property file="${phing.dir.workflow}/build.properties" override="true"/>
+
+        <!-- Check for important properties -->
+        <fail unless="buildDir" message="[buildDir] is missing" />
+        <fail unless="project" message="[project] is missing" />
+        <fail unless="version" message="[version] is missing" />
+
+        <!-- Load the porperties file for current environment or skip -->
+        <if>
+            <available file='${phing.dir.workflow}/environments/${env}/${env}.properties' 
+                       type="file" />
+            <then>
+                <property file="${phing.dir.workflow}/environments/${env}/${env}.properties"
+                          override="true" />
+            </then>
+            <else>
+                <echo message="[Skip] environments/${env}/${env}.properties not found" />
+            </else>
+        </if>
+
+        <!-- Create build dir -->
+        <resolvepath propertyName = "buildDir" file = "${buildDir}"/>
+        <mkdir dir="${buildDir}" />
+        <echo message="Build Dir Set To : ${buildDir}" />
+        
+        <!-- Create dist dir -->
+        <resolvepath propertyName = "distDir" file = "${distDir}"/>
+        <mkdir dir="${distDir}" />
+        <echo message="Dist Dir Set To : ${distDir}" />
+        
+    </target>
+    
+    <!-- Clean -->
+    <target name="gwp:clean" depends="-gwp:setup" description="Clean the build dir">
+        <echo msg="Trying to clean up build dir" />
+        <chmod mode = "0777" quiet="true" verbose = "false" failonerror="false">
+            <fileset dir="${buildDir}" defaultexcludes="false">
+                <include name="**/**"/>
+                <exclude name="/" />
+            </fileset>
+        </chmod>
+        <delete includeemptydirs="true">
+            <fileset dir="${buildDir}" defaultexcludes="false">
+                <include name="**/**"/>
+                <exclude name="/" />
+            </fileset>  
+        </delete>
+    </target>
+    
+    <!-- 
+        Fetch :
+        ==========
+        
+        Fetch the porject source code from Git version controll system .
+        
+        The default implementation of this target will try to fetch the given
+        project version from Git version controll system but it is still possible 
+        to override this target to fetch the source code from somewhere else for
+        example Svn version controll system or just copy the source code from 
+        current working dir to the built dir.
+    -->
+    <target name="gwp:fetch" depends="gwp:clean" description="Fetch project source code">
+        
+        <!-- check for target required porperites -->
+        <fail unless="fetch.repo" message="[fetch.repo] is missing" />
+        <fail unless="fetch.cmd" message="[fetch.cmd] is missing" />   
+        
+        <!-- clone the porject into the build dir -->
+        <gitclone 
+            repository="${fetch.repo}"
+            targetPath="${buildDir}" 
+            gitPath="${fetch.cmd}"/>
+        
+        <!-- 
+           swtich to the given version , if version(brunch or tag) doesn't exist
+           an error will be thrown
+        -->
+        <gitcheckout
+            gitPath="${fetch.cmd}"
+            repository="${buildDir}"
+            branchname="${version}" 
+            quiet="false"
+            forcecreate="false"
+            force="true"/>
+        
+    </target>
+    
+    <!-- Composer Install -->
+    <target name="gwp:composer" depends="-gwp:setup" description="Install dependencies using composer">
+        
+        <!-- check for target required porperites -->
+        <fail unless="composer.path" message="[composer.path] is missing" />
+        <fail unless="composer.dev" message="[composer.dev] is missing" />
+        
+        <!-- check if we should install dev dependencies -->
+        <if>
+            <equals arg1 = "${composer.dev}" arg2 = "true" />
+            <then>
+                <echo message="Installing dependencies including dev packages"/>
+                <composer command="install" composer="${composer.path}">
+                    <arg value="--optimize-autoloader" />
+                    <arg value="--working-dir" />
+                    <arg path="${buildDir}" />
+                </composer>
+            </then>
+            <else>
+                <echo message="Installing dependencies without dev packages"/>
+                <composer command="install" composer="${composer.path}">
+                    <arg value="--optimize-autoloader" />
+                    <arg value="--no-dev" />
+                    <arg value="--working-dir" />
+                    <arg path="${buildDir}" />
+                </composer>  
+            </else>
+        </if>
+        
+    </target>
+    
+    <!-- Env -->
+    <target name="gwp:env" depends="-gwp:setup" 
+            description="Copy the .env.X file to build dir">
+        
+        <!-- check for target required porperites -->
+        <fail unless="env.dir" message="[env.dir] is missing" />
+        
+        <echo>Copying the environment file</echo>
+        <copy file="${env.path}" 
+              tofile="${env.dir}/.env.${env}" 
+              overwrite="true" />
+        
+    </target>
+    
+    <!-- Copy -->
+    <target name="gwp:copy" depends="-gwp:setup" 
+            description="Copy required files to clean dir">
+        
+        <!-- check for target required porperites -->
+        <fail unless="copy.dir" message="[copy.dir] is missing" />
+        <fail unless="copy.excludeFile" message="[copy.excludeFile] is missing" />
+        
+        <resolvepath propertyName = "copy.dir" file = "${copy.dir}"/>
+        <mkdir dir="${copy.dir}"/>
+        <delete includeemptydirs="true">
+            <fileset dir="${copy.dir}" defaultexcludes="false">
+                <exclude name="/" />
+            </fileset>
+        </delete>
+        <echo>Copy Dir Set To : ${copy.dir}</echo>
+        <echo>Trying to setup clean deploy directory</echo>
+        
+        <loadfile property="copy.exclude.content" srcFile="${copy.excludeFile}"/>
+        <if>
+            <equals arg1="${copy.exclude.content}" arg2="" trim="true" />
+            <else>
+                <php expression='str_replace(array("\n", "\t", "\r"), ",", "${copy.exclude.content}")' 
+                     returnProperty="copy.exclude.content"/>
+            </else>
+        </if>
+        
+        <copy includeemptydirs="true" 
+              todir="${copy.dir}" 
+              tstamp="true">
+            <fileset dir="${buildDir}" 
+                     defaultexcludes="true" 
+                     expandsymboliclinks = "true"
+                     casesensitive="false"
+                     excludes="${copy.exclude.content}">
+            </fileset>
+        </copy>
+         
+    </target>
+    
+    <!-- Archive -->
+    <target name="gwp:archive" depends="-gwp:setup" 
+            description="Build new archive file for project release">
+        
+        <!-- check for target required porperites -->
+        <fail unless="archive.name" message="[archive.name] is missing" />
+        <fail unless="archive.srcDir" message="[archive.srcDir] is missing" />
+        <fail unless="archive.destDir" message="[archive.destDir] is missing" />
+        <fail unless="archive.excludeFile" message="[archive.excludeFile] is missing" />
+        
+        <resolvepath propertyName = "archive.srcDir" file = "${archive.srcDir}"/>
+        <resolvepath propertyName = "archive.destDir" file = "${archive.destDir}"/>
+        <mkdir dir="${archive.destDir}" />
+        <echo>Archive Src Dir Set To : ${archive.srcDir}</echo>
+        <echo>Archive Dest Dir Set To : ${archive.destDir}</echo>
+        
+        <!-- delete old archive file if exist -->
+        <if>
+            <available file='${archive.destDir}/${archive.name}' type="file" />
+            <then>
+                <delete file="${archive.destDir}/${archive.name}"/>
+            </then>
+        </if>
+        
+        <loadfile property="archive.exclude.content" srcFile="${archive.excludeFile}"/>
+        <if>
+            <equals arg1="${archive.exclude.content}" arg2="" trim="true" />
+            <else>
+                <php expression='str_replace(array("\n", "\t", "\r"), ",", "${archive.exclude.content}")' 
+                     returnProperty="archive.exclude.content"/>
+            </else>
+        </if>
+              
+        <!-- Create the new archive -->
+        <zip destfile="${archive.destDir}/${archive.name}" includeemptydirs="false" >
+            <fileset dir="${archive.srcDir}" 
+                     defaultexcludes="true" 
+                     expandsymboliclinks = "true"
+                     excludes="${archive.exclude.content}">
+            </fileset>
+        </zip>
+        
+        <!-- Check for archive creation success -->
+        <available file="${archive.destDir}/${archive.name}" property="pkgNotfound" value="true"/>
+        <fail unless="pkgNotfound" message="Faild to build ${archive.name} archive file " />
+        
+    </target>
+    
+    <!-- Apache .htaccess-->
+    <target name="gwp:htaccess" depends="-gwp:setup" 
+            description="Generate .htaccess file">
+        
+        <!-- check for target required porperites -->
+        <fail unless="WP_HOME_PLAIN" message="[WP_HOME_PLAIN] is missing" />
+        <fail unless="htaccess.template" message="[htaccess.template] is missing" />
+        <fail unless="htaccess.dir" message="[htaccess.dir] is missing" />
+        
+        <copy file="${htaccess.template}" 
+              tofile="${htaccess.dir}/.htaccess" 
+              overwrite="true">
+            <filterchain>
+                <replacetokens begintoken="%" endtoken="%">
+                    <token key="project" value="${project}" />
+                    <token key="env" value="${env}" />
+                    <token key="version" value="${version}" />
+                    <token key="date" value="${buildtime}" />
+                    <token key="host" value="${WP_HOME_PLAIN}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+        
+    </target>
+</project>

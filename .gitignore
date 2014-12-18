@@ -23,7 +23,8 @@ vendor/*
 # Root
 /nbproject/private/
 /bin
-/.dist
+/dist
+/.build
 /.env.*
 !/.env.local
 /.htaccess
