@@ -207,6 +207,7 @@
         <fail unless="copy.dir" message="[copy.dir] is missing" />
         <fail unless="copy.excludeFile" message="[copy.excludeFile] is missing" />
         
+        <echo>Trying to setup clean deploy directory</echo>
         <resolvepath propertyName = "copy.dir" file = "${copy.dir}"/>
         <mkdir dir="${copy.dir}"/>
         <delete includeemptydirs="true">
@@ -215,7 +216,6 @@
             </fileset>
         </delete>
         <echo>Copy Dir Set To : ${copy.dir}</echo>
-        <echo>Trying to setup clean deploy directory</echo>
         
         <loadfile property="copy.exclude.content" srcFile="${copy.excludeFile}"/>
         <if>
