@@ -128,7 +128,7 @@
         example Svn version controll system or just copy the source code from 
         current working dir to the built dir.
     -->
-    <target name="gwp:fetch" depends="-gwp:clean" description="Fetch project source code">
+    <target name="gwp:fetch" depends="gwp:clean" description="Fetch project source code">
         
         <!-- check for target required porperites -->
         <fail unless="fetch.repo" message="[fetch.repo] is missing" />
