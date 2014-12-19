@@ -296,6 +296,8 @@
         <fail unless="htaccess.template" message="[htaccess.template] is missing" />
         <fail unless="htaccess.dir" message="[htaccess.dir] is missing" />
         
+        <echo>Creating Apache .htaccess file</echo>
+        
         <copy file="${htaccess.template}" 
               tofile="${htaccess.dir}/.htaccess" 
               overwrite="true">
@@ -311,4 +313,5 @@
         </copy>
         
     </target>
+    
 </project>
