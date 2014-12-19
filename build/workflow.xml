@@ -187,7 +187,7 @@
     
     <!-- Env -->
     <target name="gwp:env" depends="-gwp:setup" 
-            description="Copy the .env.X file to build dir">
+            description="Copy the .env.X file to given copy dir">
         
         <!-- check for target required porperites -->
         <fail unless="env.dir" message="[env.dir] is missing" />
@@ -241,7 +241,7 @@
     
     <!-- Archive -->
     <target name="gwp:archive" depends="-gwp:setup" 
-            description="Build new archive file for project release">
+            description="Build new archive file for the project">
         
         <!-- check for target required porperites -->
         <fail unless="archive.name" message="[archive.name] is missing" />
