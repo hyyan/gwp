@@ -25,12 +25,11 @@
     
     <!-- help -->
     <target name="help" description="Display help message about available targets">
-        <exec executable="phing" dir="${phing.dir}/bin" outputProperty="targets">
+        <exec executable="phing" dir="${phing.dir}/bin" passthru="true">
             <arg value="-f" />
             <arg path="${phing.file}" />
             <arg value="-l" />
         </exec>
-        <echo>${targets}</echo>
     </target>
     
 </project>
