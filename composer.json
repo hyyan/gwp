@@ -63,7 +63,8 @@
     "require-dev": {
         "phing/phing": "2.9.*",
         "pear-pear.php.net/pear": "1.9.*",
-        "pear-pear.php.net/VersionControl_Git": "0.4.*"
+        "pear-pear.php.net/VersionControl_Git": "0.4.*",
+        "dg/ftp-deployment": "2.*"
     },
     "extra": {
         "installer-paths": {

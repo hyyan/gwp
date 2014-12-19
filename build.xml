@@ -20,6 +20,9 @@
     <!-- Import the Gwp workflow file -->
     <import file="${phing.dir}/build/workflow.xml"/>
     
+    <!-- Optional modules -->
+    <import file="${phing.dir}/build/modules/ftp-sync/ftp-sync.xml"/>
+    
     <!-- help -->
     <target name="help" description="Display help message about available targets">
         <exec executable="phing" dir="${phing.dir}/bin" outputProperty="targets">
@@ -29,5 +32,5 @@
         </exec>
         <echo>${targets}</echo>
     </target>
-        
+    
 </project>

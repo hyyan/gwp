@@ -28,3 +28,6 @@ vendor/*
 /.env.*
 !/.env.local
 /.htaccess
+/*-deploy.ini
+/*-deploy.php
+/*.log

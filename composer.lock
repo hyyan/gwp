@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "109dbe6bb39458a47e3a27f6a9ec46ee",
+    "hash": "5941f9da2572328dd6644639a10b461b",
     "packages": [
         {
             "name": "composer/installers",
@@ -199,6 +199,48 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "dg/ftp-deployment",
+            "version": "v2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dg/ftp-deployment.git",
+                "reference": "9bbfd6368b32639c2255b89a8f5e0c4f46f74081"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dg/ftp-deployment/zipball/9bbfd6368b32639c2255b89a8f5e0c4f46f74081",
+                "reference": "9bbfd6368b32639c2255b89a8f5e0c4f46f74081",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "bin": [
+                "Deployment/deployment"
+            ],
+            "type": "project",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
+                }
+            ],
+            "description": "A tool for automated deployment of web applications to an FTP server.",
+            "homepage": "https://github.com/dg/ftp-deployment",
+            "keywords": [
+                "deployment",
+                "ftp",
+                "ssh"
+            ],
+            "time": "2014-09-02 09:26:36"
+        },
         {
             "name": "pear-pear.php.net/Archive_Tar",
             "version": "1.3.13",

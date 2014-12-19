@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model 
+    xlink:href="/usr/share/php5/PEAR/data/phing/etc/phing-grammar.rng"
+    type="application/xml"
+    schematypens="http://relaxng.org/ns/structure/1.0" ?>
+    
+<!--
+This file is part of the hyyan/gwp package.
+(c) Hyyan Abo Fakher <tiribthea4hyyan@gmail.com>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+-->
+
+<project name="FTP Sync" 
+         basedir="." 
+         phingVersion = "2.9.1">
+ 
+    <!-- Sync -->
+    <target name="gwp:sync" description="Synchronize files throw FTP">
+        
+        <!-- check for target required porperites -->
+        <fail unless="ftp-sync.executable" message="[ftp-sync.executable] is missing" />
+        <fail unless="ftp-sync.deployFile" message="[ftp-sync.deployFile] is missing" />
+        <fail unless="ftp-sync.dryrun" message="[ftp-sync.dryrun] is missing" />
+        
+        <resolvepath propertyName = "ftp-sync.deployFile" 
+                     file="${ftp-sync.deployFile}"/>
+
+        <!-- check if we should use dryrun mode -->
+        <if>
+            <equals arg1 = "${ftp-sync.dryrun}" arg2 = "true" />
+            <then>
+                <echo message="FTP Synchronizing [Dry Run] ..."/>
+                <exec executable="${ftp-sync.executable}" dir="." passthru="true">
+                    <arg value="${ftp-sync.deployFile}" />
+                    <arg value="--test" />
+                </exec>
+            </then>
+            <else>
+                <echo message="FTP Synchronizing ..."/>
+                <exec executable="${ftp-sync.executable}" dir="." passthru="true">
+                    <arg value="${ftp-sync.deployFile}" />
+                </exec>
+            </else>
+        </if>
+        
+    </target>
+        
+</project>
