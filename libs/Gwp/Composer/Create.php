@@ -8,16 +8,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Gwp;
+namespace Gwp\Composer;
 
 use Composer\Script\Event;
+use Gwp\Util;
 
 /**
- * Create Porject Script
+ * Create Project Script
  *
  * @author Hyyan 
  */
-class Create
+final class Create
 {
 
     /**
@@ -28,13 +29,12 @@ class Create
      */
     public static function generateSalts(Event $event)
     {
-        $root = dirname(dirname(__DIR__));
+        $root = dirname(dirname(dirname(__DIR__)));
         $composer = $event->getComposer();
         $io = $event->getIO();
 
+        $generate_salts = true;
         if (!$io->isInteractive()) {
-            $generate_salts = $composer->getConfig()->get('generate-salts');
-        } else {
             $generate_salts = $io->askConfirmation(
                     '<info>Do you want to generat fresh salt keys ? (Note that this action will override your shared.php config file inside the config dir)'
                     . '</info> [<comment>Y,n</comment>]? '
@@ -56,7 +56,7 @@ class Create
                     . "</error>");
             return 1;
         }
-        $content = static::applyTemplate(__DIR__ . '/templates/shared.php.tpl', array(
+        $content = Util::applyTemplate('Composer/shared.php.tpl', array(
                     'saltKeys' => $salts
         ));
         if (!@file_put_contents($root . '/config/shared.php', $content)) {
@@ -69,33 +69,6 @@ class Create
             );
             return 1;
         }
-    }
-
-    /**
-     * Execute a PHP template file and return the result as a string.
-     * 
-     * @param string $template
-     * @param array $vars
-     * @param boolean $includeGlobals
-     * 
-     * @return string
-     */
-    public static function applyTemplate($template, array $vars = array(), $includeGlobals = true)
-    {
-        extract($vars);
-
-        if ($includeGlobals) {
-            extract($GLOBALS, EXTR_SKIP);
-        }
-
-        ob_start();
-
-        require($template);
-
-        $applied_template = ob_get_contents();
-        ob_end_clean();
-
-        return $applied_template;
     }
 
 }

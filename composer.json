@@ -46,11 +46,11 @@
         "preferred-install": "dist"
     },
     "scripts": {
-        "post-root-package-install": ["Gwp\\Create::generateSalts"]
+        "post-root-package-install": ["Gwp\\Composer\\Create::generateSalts"]
     },
     "autoload": {
         "psr-0": {
-            "Gwp\\Create": "helpers"
+            "": "libs/"
         }
     },
     "require": {
