@@ -32,4 +32,25 @@
         </exec>
     </target>
     
+    <!-- build -->
+    <target name="build" 
+            description="Basic build target"
+            depends="gwp:clean,gwp:fetch,gwp:composer,gwp:env,gwp:htaccess,gwp:archive">
+        <echo>Built project</echo>
+    </target>
+    
+    <!-- package -->
+    <target name="package" 
+            description="Basic package target"
+            depends="build,gwp:archive">
+        <echo>Packaged project</echo>
+    </target>
+
+    <!-- deploy -->
+    <target name="ftp-deploy" 
+            description="Basic ftp deploy target"
+            depends="package,gwp:ftp-sync">
+        <echo>Deployed project</echo>
+    </target>
+    
 </project>
