@@ -17,7 +17,7 @@ file that was distributed with this source code.
          phingVersion = "2.9.1">
  
     <!-- Sync -->
-    <target name="gwp:sync" description="Synchronize files throw FTP">
+    <target name="gwp:ftp-sync" description="Synchronize files throw FTP">
         
         <!-- check for target required porperites -->
         <fail unless="ftp-sync.executable" message="[ftp-sync.executable] is missing" />
