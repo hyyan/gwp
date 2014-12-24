@@ -23,10 +23,8 @@ file that was distributed with this source code.
         <!-- check for target required porperites -->
         <fail unless="WP_HOME_PLAIN" 
               message="Apache htaccess module - [WP_HOME_PLAIN] is missing" />
-        <fail unless="apache-htaccess.template" 
-              message="Apache htaccess module - [apache-htaccess.template] is missing" />
-        <fail unless="apache-htaccess.dir" 
-              message="Apache htaccess module - [apache-htaccess.dir] is missing" />
+        <fail unless="apache-htaccess.template" message="[apache-htaccess.template] is missing" />
+        <fail unless="apache-htaccess.dir" message="[apache-htaccess.dir] is missing" />
         
         <echo>Creating Apache .htaccess file</echo>
         
