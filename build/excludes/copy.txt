@@ -2,6 +2,7 @@ bin/**
 nbproject/** 
 build/**
 options/**
+helpers/**
 web/cms/wp-content/** 
 **/composer.* 
 **/*readme.html
