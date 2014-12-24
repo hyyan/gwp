@@ -35,7 +35,7 @@
     <!-- build -->
     <target name="build" 
             description="Basic build target"
-            depends="gwp:clean,gwp:fetch,gwp:composer,gwp:env,gwp:htaccess,gwp:archive">
+            depends="gwp:clean,gwp:fetch,gwp:composer,gwp:copy,gwp:env,gwp:htaccess">
         <echo>Built project</echo>
     </target>
     
