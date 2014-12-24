@@ -22,6 +22,7 @@
     
     <!-- Optional modules -->
     <import file="${phing.dir}/build/modules/ftp-sync/ftp-sync.xml"/>
+    <import file="${phing.dir}/build/modules/apache-htaccess/apache-htaccess.xml"/>
     
     <!-- help -->
     <target name="help" description="Display help message about available targets">
@@ -35,7 +36,12 @@
     <!-- build -->
     <target name="build" 
             description="Basic build target"
-            depends="gwp:clean,gwp:fetch,gwp:composer,gwp:copy,gwp:env,gwp:htaccess">
+            depends="gwp:clean,
+                     gwp:fetch,
+                     gwp:composer,
+                     gwp:copy,
+                     gwp:env,
+                     gwp:apache-htaccess">
         <echo>Built project</echo>
     </target>
     

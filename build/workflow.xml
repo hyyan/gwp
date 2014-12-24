@@ -286,32 +286,5 @@
         <fail unless="pkgNotfound" message="Faild to build ${archive.name} archive file " />
         
     </target>
-    
-    <!-- Apache .htaccess-->
-    <target name="gwp:htaccess" depends="-gwp:setup" 
-            description="Generate .htaccess file">
         
-        <!-- check for target required porperites -->
-        <fail unless="WP_HOME_PLAIN" message="[WP_HOME_PLAIN] is missing" />
-        <fail unless="htaccess.template" message="[htaccess.template] is missing" />
-        <fail unless="htaccess.dir" message="[htaccess.dir] is missing" />
-        
-        <echo>Creating Apache .htaccess file</echo>
-        
-        <copy file="${htaccess.template}" 
-              tofile="${htaccess.dir}/.htaccess" 
-              overwrite="true">
-            <filterchain>
-                <replacetokens begintoken="%" endtoken="%">
-                    <token key="project" value="${project}" />
-                    <token key="env" value="${env}" />
-                    <token key="version" value="${version}" />
-                    <token key="date" value="${buildtime}" />
-                    <token key="host" value="${WP_HOME_PLAIN}" />
-                </replacetokens>
-            </filterchain>
-        </copy>
-        
-    </target>
-    
 </project>

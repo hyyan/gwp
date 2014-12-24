@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model 
+    xlink:href="/usr/share/php5/PEAR/data/phing/etc/phing-grammar.rng"
+    type="application/xml"
+    schematypens="http://relaxng.org/ns/structure/1.0" ?>
+
+<!--
+This file is part of the hyyan/gwp package.
+(c) Hyyan Abo Fakher <tiribthea4hyyan@gmail.com>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+-->
+    
+<project name="Apache htaccess" 
+         basedir="." 
+         phingVersion = "2.9.1">
+     
+    <!-- Apache htaccess-->
+    <target name="gwp:apache-htaccess" depends="-gwp:setup" 
+            description="Create htaccess file to handle domain to web redirect">
+        
+        <!-- check for target required porperites -->
+        <fail unless="WP_HOME_PLAIN" 
+              message="Apache htaccess module - [WP_HOME_PLAIN] is missing" />
+        <fail unless="apache-htaccess.template" 
+              message="Apache htaccess module - [apache-htaccess.template] is missing" />
+        <fail unless="apache-htaccess.dir" 
+              message="Apache htaccess module - [apache-htaccess.dir] is missing" />
+        
+        <echo>Creating Apache .htaccess file</echo>
+        
+        <copy file="${apache-htaccess.template}" 
+              tofile="${apache-htaccess.dir}/.htaccess" 
+              overwrite="true">
+            <filterchain>
+                <replacetokens begintoken="%" endtoken="%">
+                    <token key="project" value="${project}" />
+                    <token key="env" value="${env}" />
+                    <token key="version" value="${version}" />
+                    <token key="date" value="${buildtime}" />
+                    <token key="host" value="${WP_HOME_PLAIN}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+        
+    </target>
+</project>
