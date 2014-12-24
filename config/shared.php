@@ -16,14 +16,6 @@ define('DB_COLLATE', '');
 $table_prefix = getenv('DB_PREFIX') ? getenv('DB_PREFIX') : 'gwp_';
 
 /**
- * WordPress Localized Language
- * Default: English
- *
- * A corresponding MO file for the chosen language must be installed to app/languages
- */
-define('WPLANG', '');
-
-/**
  * Authentication Unique Keys and Salts
  * 
  * Change these to different unique phrases!
