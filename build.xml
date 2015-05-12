@@ -41,7 +41,8 @@
                      gwp:composer,
                      gwp:copy,
                      gwp:env,
-                     gwp:apache-htaccess">
+                     gwp:apache-htaccess,
+                     gwp:ftp-generate">
         <echo>Built project</echo>
     </target>
     

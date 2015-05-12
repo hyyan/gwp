@@ -16,9 +16,8 @@ file that was distributed with this source code.
          basedir="." 
          phingVersion = "2.9.1">
  
-    <!-- Sync -->
-    <target name="gwp:ftp-sync" description="Synchronize files throw FTP">
-        
+    <!-- Setup  -->
+    <target name="-gwp:ftp-setup" description="setup required vars">
         <!-- check for target required porperites -->
         <fail unless="ftp-sync.executable" message="[ftp-sync.executable] is missing" />
         <fail unless="ftp-sync.deployFile" message="[ftp-sync.deployFile] is missing" />
@@ -26,6 +25,24 @@ file that was distributed with this source code.
         
         <resolvepath propertyName = "ftp-sync.deployFile" 
                      file="${ftp-sync.deployFile}"/>
+    </target>
+    
+    <!-- Generate  -->
+    <target name="gwp:ftp-generate" 
+            depends="-gwp:ftp-setup"
+            description="Generate the deployment file">
+        
+        <exec executable="${ftp-sync.executable}" dir="." passthru="true">
+            <arg value="${ftp-sync.deployFile}" />
+            <arg value="--generate" />
+        </exec>
+        
+    </target>
+    
+    <!-- Sync -->
+    <target name="gwp:ftp-sync" 
+            depends="-gwp:ftp-setup"
+            description="Synchronize files throw FTP">
 
         <!-- check if we should use dryrun mode -->
         <if>
