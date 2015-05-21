@@ -34,6 +34,9 @@ Much of the philosophy behind GWP is inspired by the [Bedrock](https://github.co
 4. Add theme(s) in `web/app/themes` as you would for a normal WordPress site.
 5. Access WP admin at `http://example.com/cms/wp-admin`
 
+## Documentaion
+
+* [Folder structure](https://github.com/hyyan/gwp/wiki/Folder-structure)
 
 ## Contributing
 
