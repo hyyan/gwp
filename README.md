@@ -29,8 +29,10 @@ Much of the philosophy behind GWP is inspired by the [Bedrock](https://github.co
 
 1. Create new project using composer : `composer create-project hyyan/gwp:dev-master /path/to/project/dir`
 2. Update `.env.local` to meet your local environment variables.
-3. Add theme(s) in `web/app/themes` as you would for a normal WordPress site.
-4. Access WP admin at `http://example.com/cms/wp-admin`
+3. Geneate apache .htaccess file :
+` bin/phing gwp:apache-htaccess -D apache-htaccess.dir=.`
+4. Add theme(s) in `web/app/themes` as you would for a normal WordPress site.
+5. Access WP admin at `http://example.com/cms/wp-admin`
 
 
 ## Contributing
