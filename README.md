@@ -27,7 +27,7 @@ Much of the philosophy behind GWP is inspired by the [Bedrock](https://github.co
 
 ## Installation
 
-1. Create new project using composer : `composer create-project hyyan/gwp:dev-master /path/to/project/dir`
+1. Create new project using composer : `composer create-project hyyan/gwp:dev-master /path`
 2. Update `.env.local` to meet your local environment variables.
 3. Geneate apache .htaccess file :
 ` bin/phing gwp:apache-htaccess -D apache-htaccess.dir=.`
