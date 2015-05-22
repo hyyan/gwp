@@ -39,7 +39,7 @@ Much of the philosophy behind GWP is inspired by the [Bedrock](https://github.co
 
 * [Folder structure](https://github.com/hyyan/gwp/wiki/Folder-structure)
 * [Environments](https://github.com/hyyan/gwp/wiki/Environments)
-* [Composer] [https://github.com/hyyan/gwp/wiki/Composer]
+* [Composer] (https://github.com/hyyan/gwp/wiki/Composer)
 
 ## Contributing
 
