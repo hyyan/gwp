@@ -41,6 +41,7 @@ Much of the philosophy behind GWP is inspired by the [Bedrock](https://github.co
 * [Environments](https://github.com/hyyan/gwp/wiki/Environments)
 * [Composer] (https://github.com/hyyan/gwp/wiki/Composer)
 * [WP Cron] (https://github.com/hyyan/gwp/wiki/WP-Cron)
+* [Build And Deployment] (https://github.com/hyyan/gwp/wiki/Build-And-Deployment-Workflow)
 
 ## Contributing
 
