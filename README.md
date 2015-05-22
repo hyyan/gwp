@@ -1,4 +1,4 @@
-# [GWP - General Wordpress Implementaion](https://github.com/hyyan/gwp)
+# [GWP - General Wordpress Implementaion](http://hyyan.github.io/gwp)
 
 [![project status](http://stillmaintained.com/hyyan/gwp.png)](http://stillmaintained.com/hyyan/gwp)
 [![Latest Stable Version](https://poser.pugx.org/hyyan/gwp/v/stable.png)](https://packagist.org/packages/hyyan/gwp)
