@@ -38,6 +38,7 @@ Much of the philosophy behind GWP is inspired by the [Bedrock](https://github.co
 ## Documentaion
 
 * [Folder structure](https://github.com/hyyan/gwp/wiki/Folder-structure)
+* [Environments](https://github.com/hyyan/gwp/wiki/Environments)
 
 ## Contributing
 
