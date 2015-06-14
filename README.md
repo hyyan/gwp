@@ -1,4 +1,4 @@
-# [GWP - General Wordpress Implementaion](https://github.com/hyyan/gwp)
+# [GWP - General Wordpress Implementaion](http://hyyan.github.io/gwp)
 
 [![project status](http://stillmaintained.com/hyyan/gwp.png)](http://stillmaintained.com/hyyan/gwp)
 [![Latest Stable Version](https://poser.pugx.org/hyyan/gwp/v/stable.png)](https://packagist.org/packages/hyyan/gwp)
@@ -29,11 +29,19 @@ Much of the philosophy behind GWP is inspired by the [Bedrock](https://github.co
 
 1. Create new project using composer : `composer create-project hyyan/gwp:dev-master /path`
 2. Update `.env.local` to meet your local environment variables.
-3. Geneate apache .htaccess file :
+3. Register your local maching name in the `config/environment.php file
+4. Geneate apache .htaccess file :
 ` bin/phing gwp:apache-htaccess -D apache-htaccess.dir=.`
-4. Add theme(s) in `web/app/themes` as you would for a normal WordPress site.
-5. Access WP admin at `http://example.com/cms/wp-admin`
+5. Add theme(s) in `web/app/themes` as you would for a normal WordPress site.
+6. Access WP admin at `http://example.com/cms/wp-admin`
 
+## Documentaion
+
+* [Folder structure](https://github.com/hyyan/gwp/wiki/Folder-structure)
+* [Environments](https://github.com/hyyan/gwp/wiki/Environments)
+* [Composer] (https://github.com/hyyan/gwp/wiki/Composer)
+* [WP Cron] (https://github.com/hyyan/gwp/wiki/WP-Cron)
+* [Build And Deployment] (https://github.com/hyyan/gwp/wiki/Build-And-Deployment-Workflow)
 
 ## Contributing
 
